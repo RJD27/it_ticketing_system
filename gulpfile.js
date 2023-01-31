@@ -10,11 +10,20 @@ const header = require("gulp-header");
 const merge = require("merge-stream");
 const plumber = require("gulp-plumber");
 const rename = require("gulp-rename");
-const sass = require("gulp-sass");
+const sass = require("gulp-sass")(require("sass"));
 const uglify = require("gulp-uglify");
+const express = require("express");
+const bodyParser = require('body-parser');
+const auth = require("./auth.js");
+
 
 // Load package.json for banner
 const pkg = require('./package.json');
+
+//express app
+const app = express();
+app.use(bodyParser.urlencoded({extended:false}));
+app.use(bodyParser.json());
 
 // Set the banner content
 const banner = ['/*!\n',
@@ -25,22 +34,49 @@ const banner = ['/*!\n',
   '\n'
 ].join('');
 
+
+
+
 // BrowserSync
 function browserSync(done) {
   browsersync.init({
     server: {
-      baseDir: "./"
+      baseDir: "./",
+      middleware: [
+        app,
+        function(req,res,next){
+          auth(app);
+          next();
+        }
+      ]
     },
     port: 3000
   });
   done();
 }
 
+
+
 // BrowserSync reload
 function browserSyncReload(done) {
   browsersync.reload();
   done();
 }
+
+
+//routes
+app.get("/", (req,res,next)=>{
+  console.log("Express coming through!");
+  next();
+})
+
+app.post("/login", (req,res,next)=>{
+  console.log(req.body);
+  
+  next();
+})
+
+
 
 // Clean vendor
 function clean() {
@@ -136,6 +172,7 @@ const build = gulp.series(vendor, gulp.parallel(css, js));
 const watch = gulp.series(build, gulp.parallel(watchFiles, browserSync));
 
 // Export tasks
+
 exports.css = css;
 exports.js = js;
 exports.clean = clean;
@@ -143,3 +180,7 @@ exports.vendor = vendor;
 exports.build = build;
 exports.watch = watch;
 exports.default = build;
+
+
+
+
