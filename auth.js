@@ -6,7 +6,7 @@ const localStrategy = require("passport-local");
 
 
 module.exports = function(app) { 
-
+    console.log("Auth.js kicking in!")
     app.use(session({
         secret: process.env.SESSION_SECRET,
         resave: true,

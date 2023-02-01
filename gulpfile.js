@@ -19,6 +19,7 @@ const auth = require("./auth.js");
 
 // Load package.json for banner
 const pkg = require('./package.json');
+const passport = require("passport");
 
 //express app
 const app = express();
@@ -70,9 +71,9 @@ app.get("/", (req,res,next)=>{
   next();
 })
 
-app.post("/login", (req,res,next)=>{
+app.post("/login", passport.authenticate("local",{failureRedirect: "./login.html"}), (req,res,next)=>{
   console.log(req.body);
-  
+
   next();
 })
 
