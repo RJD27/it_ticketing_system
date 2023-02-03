@@ -12,47 +12,21 @@ const plumber = require("gulp-plumber");
 const rename = require("gulp-rename");
 const sass = require("gulp-sass")(require("sass"));
 const uglify = require("gulp-uglify");
-const express = require("express");
-const bodyParser = require('body-parser');
-const auth = require("./auth.js");
-
-
-// Load package.json for banner
-const pkg = require('./package.json');
-const passport = require("passport");
-
-//express app
-const app = express();
-app.use(bodyParser.urlencoded({extended:false}));
-app.use(bodyParser.json());
-
-// Set the banner content
-const banner = ['/*!\n',
-  ' * Start Bootstrap - <%= pkg.title %> v<%= pkg.version %> (<%= pkg.homepage %>)\n',
-  ' * Copyright 2013-' + (new Date()).getFullYear(), ' <%= pkg.author %>\n',
-  ' * Licensed under <%= pkg.license %> (https://github.com/StartBootstrap/<%= pkg.name %>/blob/master/LICENSE)\n',
-  ' */\n',
-  '\n'
-].join('');
-
-
+const nodemon = require("nodemon");
+const gls = require("gulp-live-server");
 
 
 // BrowserSync
 function browserSync(done) {
+  var server = gls.new("server.js");
+  server.start();
+  /*
   browsersync.init({
     server: {
-      baseDir: "./",
-      middleware: [
-        app,
-        function(req,res,next){
-          auth(app);
-          next();
-        }
-      ]
-    },
-    port: 3000
-  });
+      baseDir: "./"
+    }
+  });    
+  */
   done();
 }
 
@@ -65,19 +39,21 @@ function browserSyncReload(done) {
 }
 
 
-//routes
-app.get("/", (req,res,next)=>{
-  console.log("Express coming through!");
-  next();
-})
-
-app.post("/login", passport.authenticate("local",{failureRedirect: "./login.html"}), (req,res,next)=>{
-  console.log(req.body);
-
-  next();
-})
 
 
+// Load package.json for banner
+const pkg = require('./package.json');
+
+
+
+// Set the banner content
+const banner = ['/*!\n',
+  ' * Start Bootstrap - <%= pkg.title %> v<%= pkg.version %> (<%= pkg.homepage %>)\n',
+  ' * Copyright 2013-' + (new Date()).getFullYear(), ' <%= pkg.author %>\n',
+  ' * Licensed under <%= pkg.license %> (https://github.com/StartBootstrap/<%= pkg.name %>/blob/master/LICENSE)\n',
+  ' */\n',
+  '\n'
+].join('');
 
 // Clean vendor
 function clean() {
