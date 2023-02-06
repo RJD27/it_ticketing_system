@@ -1,9 +1,25 @@
-require("dotenv").config();
+require('dotenv').config()
+
+
 
 const passport = require("passport");
 const session = require("express-session");
 const localStrategy = require("passport-local");
+const mysql = require("mysql");
 
+
+
+const con = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "PB23Group",
+    database: "ticketsystem"
+  })
+  
+  
+
+
+  
 
 module.exports = function(app) { 
     console.log("Auth.js kicking in!")
@@ -17,8 +33,18 @@ module.exports = function(app) {
     app.use(passport.session());
 
 
+    con.connect(function(err){
+        if(err) console.log(err);
+        console.log("DB Connected...");
+        var sql = "INSERT INTO Users (FirstName) VALUES ('Eric')";
+        con.query(sql, function(err, result){
+            if(err) console.log(err);
+            console.log(result);
+        })
+      });
+
     passport.use(new localStrategy((user,pass,done)=>{
-        //find in database the user/pass and return it IF found, else return errors.
+        
     }))
 
     passport.serializeUser((user,done)=>{
