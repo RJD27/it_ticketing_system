@@ -1,4 +1,4 @@
-CREATE DATABASE IT_Ticketing_System:
+CREATE DATABASE IT_Ticketing_System;
 
 USE IT_Ticketing_System;
 
@@ -6,17 +6,19 @@ CREATE TABLE Users (
 	UserID INT PRIMARY KEY AUTO_INCREMENT,
 	FirstName VARCHAR(255) NOT NULL,
 	LastName VARCHAR(255) NOT NULL,
-	Email VARCHAR(255) UNQUIE
+	Email VARCHAR(255) UNIQUE,
+	PasswordHash VARCHAR(255),
+	Verified Bool
 	);
 	
 CREATE TABLE Tickets (
-	TicketID INT PRIMARY KEY AUTO_INCCREMENT,
+	TicketID INT PRIMARY KEY AUTO_INCREMENT,
 	Subject VARCHAR(255),
 	Description TEXT,
-	Status ENUM('Open', 'In Progress', 'closed')
-	Priority Enum('Low', 'Medium', 'High')
+	Status ENUM('Open', 'In Progress', 'closed'),
+	Priority Enum('Low', 'Medium', 'High'),
 	UserID INT,
-	FOREIGN KEY (UserID) REFERENECES Users(UserID)
+	FOREIGN KEY (UserID) REFERENCES Users(UserID)
 	);
 	
 Create Table TicketComments (
@@ -25,8 +27,8 @@ Create Table TicketComments (
 	CommentDate DATETIME,
 	TicketID INT,
 	UserID INT,
-	FOREIGN KEY (TicketID) REFERENECES Tickets(TicketID),
-	FOREIGN KEY (UserID) REFERENECES Users(UserID)
+	FOREIGN KEY (TicketID) REFERENCES Tickets(TicketID),
+	FOREIGN KEY (UserID) REFERENCES Users(UserID)
 	);
 	
 
