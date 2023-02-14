@@ -4,6 +4,7 @@ const localStrategy = require("passport-local");
 const passport = require("passport")
 const mysql = require("mysql2");
 const bodyParser = require("body-parser");
+const bcrypt = require("bcrypt");
 
 
 
@@ -21,7 +22,6 @@ module.exports = function(app) {
         password: "PB23Group",
         database: "IT_Ticketing_System"
     })
-
     
 
     console.log("Auth.js kicking in!")
