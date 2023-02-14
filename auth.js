@@ -1,6 +1,7 @@
 require('dotenv').config()
 const session = require("express-session");
 const localStrategy = require("passport-local");
+const passport = require("passport")
 const mysql = require("mysql2");
 const bodyParser = require("body-parser");
 
@@ -10,7 +11,7 @@ const bodyParser = require("body-parser");
 
   
 
-module.exports = function(app, passport) { 
+module.exports = function(app) { 
     app.use(bodyParser.urlencoded({extended:true}));
     app.use(bodyParser.json());
 
@@ -39,7 +40,7 @@ module.exports = function(app, passport) {
     con.connect((err)=>{
         console.log("DB connection outside of passport established...")
       
-      
+      //localstrategy to search DB for email/password and check if it matches the typed in email/password.
       passport.use(new localStrategy({usernameField: 'email',
       passwordField: 'password'}, function(email,password,done){
         console.log("localstrategy user is...");
@@ -55,12 +56,14 @@ module.exports = function(app, passport) {
                   return done(null, null);
                 }
                 con.query("SELECT Password FROM users WHERE Email = ?", [email], function(err, pass){
-                    if(password !== pass.Password){
-                      return done(null,account);  
-                    }
-                    
-                }  )
-                
+                  if(err){console.log(erre)
+                  }
+                  if(password !== pass.Password){
+                    console.log("Email or password incorrect.")
+                    return done(null, null);
+                  }
+                  return done(null,account);  
+                })
             })
         
       }))
