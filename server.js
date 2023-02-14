@@ -2,6 +2,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const auth = require("./auth.js");
+const passport = require("passport");
 
 const app = express();
 
@@ -39,6 +40,12 @@ app.post("/login", passport.authenticate("local",{failureRedirect: "./login"}), 
   res.redirect("/");
 });
 
+app.get("/logout", function(req,res){
+  req.logout(function(err){
+    
+    res.redirect("/login");
+  });
+})
 
 
 

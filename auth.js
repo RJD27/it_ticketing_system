@@ -6,12 +6,6 @@ const mysql = require("mysql2");
 const bodyParser = require("body-parser");
 const bcrypt = require("bcrypt");
 
-
-
-
-
-  
-
 module.exports = function(app) { 
     app.use(bodyParser.urlencoded({extended:true}));
     app.use(bodyParser.json());
@@ -47,25 +41,25 @@ module.exports = function(app) {
         console.log(email);
             var sql = "SELECT * FROM users WHERE Email = ?";
             con.query(sql, [email],function(err, account){
-                
                 if(err) {
                      return console.log(err);
                 }
                 if(!account){
                   console.log("No account")
-                  return done(null, null);
+                  return done(null, false);
                 }
                 con.query("SELECT Password FROM users WHERE Email = ?", [email], function(err, pass){
-                  if(err){console.log(erre)
+                  console.log(pass[0].Password)
+
+                  if(err){console.log(err)
                   }
-                  if(password !== pass.Password){
+                  if(!bcrypt.compareSync(password !== pass[0].Password)){
                     console.log("Email or password incorrect.")
-                    return done(null, null);
+                    return done(null, false);
                   }
                   return done(null,account);  
                 })
             })
-        
       }))
       
       passport.serializeUser((user,done)=>{
