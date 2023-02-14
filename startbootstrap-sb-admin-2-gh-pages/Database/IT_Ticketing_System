@@ -8,7 +8,6 @@ CREATE TABLE Users (
 	LastName VARCHAR(255) NOT NULL,
 	Email VARCHAR(255) UNIQUE,
 	PasswordHash VARCHAR(255),
-	Verified Bool
 	);
 	
 CREATE TABLE Tickets (

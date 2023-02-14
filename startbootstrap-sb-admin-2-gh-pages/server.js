@@ -2,25 +2,14 @@ require('dotenv').config();
 
 const express = require("express");
 const app = express();
-const bcrypt = require('bcrypt');
-const mysql_connector = require('mysql');
-const { validateRegister } = require('./js/validator');
-
-const connection = mysql_connector.createConnection({
-    host : 'localhost',
-    user : 'root',
-    password : 'PB23Group',
-    database : 'it_ticketing_system'
-});
-
-connection.connect();
+const { TryRegisterUser } = require("./js/register");
 
 app.set('views', __dirname);
 app.set('view-engine', 'ejs');
 app.engine('html', require('ejs').renderFile);
 app.use(express.static("./"));
 app.use(require('connect-livereload')());
-app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({ extended: false }));
 
 
 app.get('/', (req, res) => {
@@ -33,37 +22,12 @@ app.get('/register.html', (req, res) => {
 
 app.post('/register', async (req, res) => {
 
-    const {error, value} = validateRegister(req.body);
-    
-    if (error)
+    var isUserRegistered = await TryRegisterUser(req.body, res);
+    if(!isUserRegistered)
     {
-        console.log(error);
-        return res.send(error.details);
+        return res.redirect("./register.html");
     }
-
-    console.log("Success");
-    try {
-        const hashedPassword = await bcrypt.hash(req.body.password, 12);
-
-        var query = "INSERT INTO users (FirstName, LastName, Email, PasswordHash, Verified) VALUES (?)";
-        var values = [
-            req.body.firstName,
-            req.body.lastName,
-            req.body.email,
-            hashedPassword,
-            false
-        ];
-
-        connection.query(query, [values], function(error)
-        {
-            if (error) {
-                throw error;
-            }
-        })
-    } catch(error) {
-        console.log(error.message.concat(" - Registration Failed."));
-        res.redirect('/register.html');
-    }
+    return res.redirect("./login.html");
 });
 
 app.listen(3000);
