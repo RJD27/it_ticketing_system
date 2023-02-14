@@ -48,7 +48,6 @@
     "jquery": "3.6.0",
     "jquery.easing": "^1.4.1",
     "mysql": "^2.18.1",
-    "nodemailer": "^6.9.1",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0"
   },

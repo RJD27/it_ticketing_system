@@ -5,7 +5,6 @@ const app = express();
 const bcrypt = require('bcrypt');
 const mysql_connector = require('mysql');
 const { validateRegister } = require('./js/validator');
-const { sendEmail } = require('./js/mailer');
 
 const connection = mysql_connector.createConnection({
     host : 'localhost',
@@ -13,8 +12,6 @@ const connection = mysql_connector.createConnection({
     password : 'PB23Group',
     database : 'it_ticketing_system'
 });
-
-var verifyURL = 'http://localhost:3000/verify.html';
 
 connection.connect();
 
@@ -62,23 +59,6 @@ app.post('/register', async (req, res) => {
             if (error) {
                 throw error;
             }
-
-            var emailResult = sendEmail( {
-                userName: req.body.firstName.concat(" ", req.body.lastName),
-                email: req.body.email,
-                subject: "Verification Email",
-                html: "Verify your account here:".concat(" <a href=", verifyURL, ">", verifyURL, "</a>")
-            })
-            .then()
-            .catch((error) => {
-                console.log("Failed to send email.")
-            });
-
-            if (emailResult.error)
-            {
-                throw emailResult.error;
-            }
-            res.send("Email sent succesfully.");
         })
     } catch(error) {
         console.log(error.message.concat(" - Registration Failed."));
