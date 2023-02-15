@@ -18,7 +18,6 @@ module.exports = function(app) {
     })
     
 
-    console.log("Auth.js kicking in!")
     app.use(session({
         secret: process.env.SESSION_SECRET,
         resave: true,
@@ -32,29 +31,23 @@ module.exports = function(app) {
     
 
     con.connect((err)=>{
-        console.log("DB connection outside of passport established...")
-      
       //localstrategy to search DB for email/password and check if it matches the typed in email/password.
       passport.use(new localStrategy({usernameField: 'email',
       passwordField: 'password'}, function(email,password,done){
-        console.log("localstrategy user is...");
-        console.log(email);
             var sql = "SELECT * FROM users WHERE Email = ?";
             con.query(sql, [email],function(err, account){
                 if(err) {
                      return console.log(err);
                 }
                 if(!account){
-                  console.log("No account")
                   return done(null, false);
                 }
                 con.query("SELECT Password FROM users WHERE Email = ?", [email], function(err, pass){
-                  console.log(pass[0].Password)
 
                   if(err){console.log(err)
                   }
+                  
                   if(!bcrypt.compareSync(password !== pass[0].Password)){
-                    console.log("Email or password incorrect.")
                     return done(null, false);
                   }
                   return done(null,account);  
@@ -63,12 +56,10 @@ module.exports = function(app) {
       }))
       
       passport.serializeUser((user,done)=>{
-        console.log("Serialize...")
         done(null, user);
       })
       passport.deserializeUser((user, done)=>{
         //search DB for user by id and return that table.
-        console.log("Deserialize...");
             con.query("SELECT * FROM Users WHERE UserID = ?",[user[0].UserID], function(err, result){
                 if(err) throw err;
                 return done(null,result);

@@ -6,6 +6,9 @@ const passport = require("passport");
 
 const app = express();
 
+app.set('views', __dirname);
+app.set('view-engine', 'ejs');
+app.engine('html', require('ejs').renderFile);
 
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
@@ -18,7 +21,6 @@ app.use(express.static('public'));
 function ensureAuth(req,res,next){
     
   if(req.isAuthenticated()){
-    console.log("Success authenticated")
     next();
   }
   else {
@@ -28,21 +30,19 @@ function ensureAuth(req,res,next){
 
 //routes
 app.get("/", ensureAuth, (req,res)=>{
-  res.sendFile(__dirname + "/index.html")
+  res.render("./index.html")
 });
 
 app.get("/login", (req,res)=>{
-  res.sendFile(__dirname + "/login.html")
+  res.render("./login.html")
 })
 
 app.post("/login", passport.authenticate("local",{failureRedirect: "./login"}), (req,res)=>{
-  console.log(req.body);
   res.redirect("/");
 });
 
 app.get("/logout", function(req,res){
   req.logout(function(err){
-    
     res.redirect("/login");
   });
 })
