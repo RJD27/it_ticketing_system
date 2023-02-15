@@ -17,7 +17,7 @@ but an issue should be made prior to making the branch.
 #### Opening a PR
 For a branch to be merged with the main branch, a pull request aka PR is needed.
 To open a PR, navigate to your branch and click **'contribute'** then **'Open Pull Request'**, this will take you to a new page
-with a template PR.
+with a template PR. If your PR is still in progress, it can be marked as a draft.
 
 #### Writing a PR
 Enter a suitable title, description, and proposed changes in your PR.
