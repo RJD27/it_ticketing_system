@@ -1,6 +1,5 @@
-## Fixes Issues
- - #issue1
- - #issue2
+## Issues
+closes #
 
 ## Description
 This pull request adds something that does something.
