@@ -6,7 +6,7 @@ This branch focuses on the login aspect of the app.
 
 There are a few differences from how the register approached the routes so I will try to detail them here and we can decide what to keep.
 
-I did not mess with Bcrypt since it gets defined in the register side. 
+I did add Bcrypt to the passport localstrategy but I don't have anything for register so it won't work.
 
 I created a server.js file with all the routes inside.
 I also created a auth.js file to do Passport authentication and DB stuff.
