@@ -12,6 +12,7 @@ const plumber = require("gulp-plumber");
 const rename = require("gulp-rename");
 const sass = require("gulp-sass");
 const uglify = require("gulp-uglify");
+const liveServer = require('gulp-live-server');
 
 // Load package.json for banner
 const pkg = require('./package.json');
@@ -27,11 +28,12 @@ const banner = ['/*!\n',
 
 // BrowserSync
 function browserSync(done) {
+  let server = liveServer.new('server.js');
+  server.start();
+
   browsersync.init({
-    server: {
-      baseDir: "./"
-    },
-    port: 3000
+    proxy: "http://localhost:3000",
+    port: 4000
   });
   done();
 }
@@ -137,7 +139,7 @@ const watch = gulp.series(build, gulp.parallel(watchFiles, browserSync));
 
 // Export tasks
 exports.css = css;
-exports.js = js;
+exports.js = js; 
 exports.clean = clean;
 exports.vendor = vendor;
 exports.build = build;
