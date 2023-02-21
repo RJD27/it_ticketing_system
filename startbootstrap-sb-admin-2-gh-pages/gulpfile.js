@@ -15,36 +15,8 @@ const uglify = require("gulp-uglify");
 const nodemon = require("nodemon");
 const gls = require("gulp-live-server");
 
-
-// BrowserSync
-function browserSync(done) {
-  var server = gls.new("server.js");
-  server.start();
-  /*
-  browsersync.init({
-    server: {
-      baseDir: "./"
-    }
-  });    
-  */
-  done();
-}
-
-
-
-// BrowserSync reload
-function browserSyncReload(done) {
-  browsersync.reload();
-  done();
-}
-
-
-
-
 // Load package.json for banner
 const pkg = require('./package.json');
-
-
 
 // Set the banner content
 const banner = ['/*!\n',
@@ -54,6 +26,23 @@ const banner = ['/*!\n',
   ' */\n',
   '\n'
 ].join('');
+// BrowserSync
+function browserSync(done) {
+  let server = gls.new("server.js");
+  server.start();
+
+  browsersync.init({
+    proxy: "http://localhost:3000",
+    port: 4000
+  });
+  done();
+}
+
+// BrowserSync reload
+function browserSyncReload(done) {
+  browsersync.reload();
+  done();
+}
 
 // Clean vendor
 function clean() {
@@ -149,15 +138,10 @@ const build = gulp.series(vendor, gulp.parallel(css, js));
 const watch = gulp.series(build, gulp.parallel(watchFiles, browserSync));
 
 // Export tasks
-
 exports.css = css;
-exports.js = js;
+exports.js = js; 
 exports.clean = clean;
 exports.vendor = vendor;
 exports.build = build;
 exports.watch = watch;
 exports.default = build;
-
-
-
-

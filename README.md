@@ -1,17 +1,42 @@
-# it_ticketing_system
-A ticketing system that stores data locally.
+# IT Ticketing System
 
+A ticketing system website that stores data locally.
 
-This branch focuses on the login aspect of the app.
+# Workflow
 
-There are a few differences from how the register approached the routes so I will try to detail them here and we can decide what to keep.
+### Issues
 
-I did add Bcrypt to the passport localstrategy but I don't have anything for register so it won't work.
+Issues should be created to indicate that a feature needs to be added or a bug needs to be fixed.
+Think of these like tickets. When you create an issue you can enter a title for your issue and a description,
+you can then assign people to the issue, label the issue into a category, add the issue into a project, and/or
+add the issue to a milestone. 
 
-I created a server.js file with all the routes inside.
-I also created a auth.js file to do Passport authentication and DB stuff.
-I had to edit the gulpfile.js to proxy the express server so they can run at the same time.
+### Branches
 
-My routes primarily use res.sendFile() to display the html where I think register branch uses res.render().
-So from a POST it will redirect to the page and then the GET will use res.sendFile().
+Branches should be created when something needs to be changed. This prevents any accidental changes to the main branch.
+Branches should be named as so **'issueNumber_this_is_a_branch'**, if by chance there is no issue tied to the branch it may be ommitted,
+but an issue should be made prior to making the branch.
+
+### Pull Requests
+
+#### Opening a PR
+
+For a branch to be merged with the main branch, a pull request aka PR is needed.
+To open a PR, navigate to your branch and click **'contribute'** then **'Open Pull Request'**, this will take you to a new page
+with a template PR. If your PR is still in progress, it can be marked as a draft.
+
+#### Writing a PR
+
+Enter a suitable title, description, and proposed changes in your PR.
+At this point you can also assign a reviewer who will have the duty of reviewing and approving your code.
+
+#### Linking Issues
+
+To link issues to be closed once the PR has been approved, under the **'Issues'** heading use **'closes #issueNumber'** for each issue,
+this will automatically link the issues and close them once the PR is approved.
+
+#### Reviewing a PR
+
+Before a PR is approved it must and should be reviewed by other people. This reduces bugs and improves code.
+For info on the process of reviewing a PR: *[How to Review a PR](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/reviewing-proposed-changes-in-a-pull-request)*
 
