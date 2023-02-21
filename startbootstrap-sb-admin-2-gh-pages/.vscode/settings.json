@@ -1,0 +1,17 @@
+{
+  "sqltools.connections": [
+    {
+      "mysqlOptions": {
+        "authProtocol": "default"
+      },
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 3306,
+      "driver": "MySQL",
+      "name": "ticketsus",
+      "username": "root",
+      "password": "PB23Group",
+      "database": "it_ticketing_system"
+    }
+  ]
+}
