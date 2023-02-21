@@ -10,7 +10,7 @@ const header = require("gulp-header");
 const merge = require("merge-stream");
 const plumber = require("gulp-plumber");
 const rename = require("gulp-rename");
-const sass = require("gulp-sass")(require("sass"));
+const sass = require("gulp-sass");
 const uglify = require("gulp-uglify");
 const nodemon = require("nodemon");
 const gls = require("gulp-live-server");
@@ -26,6 +26,7 @@ const banner = ['/*!\n',
   ' */\n',
   '\n'
 ].join('');
+
 // BrowserSync
 function browserSync(done) {
   let server = gls.new("server.js");
