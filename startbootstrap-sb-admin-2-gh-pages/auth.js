@@ -56,7 +56,7 @@ module.exports = function(app) {
                   return done(null, null);
                 }
                 con.query("SELECT Password FROM users WHERE Email = ?", [email], function(err, pass){
-                  if(err){console.log(err)
+                  if(err){console.log(erre)
                   }
                   if(password !== pass.Password){
                     console.log("Email or password incorrect.")
