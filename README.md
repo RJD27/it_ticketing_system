@@ -1,6 +1,6 @@
 # IT Ticketing System
 
-A ticketing system website that stores data locally.
+A ticketing system site that stores data locally.
 
 [![GitHub Super-Linter](https://github.com/RJD27/it_ticketing_system/workflows/Lint%20Code%20Base/badge.svg)](https://github.com/marketplace/actions/super-linter)
 
@@ -9,7 +9,7 @@ A ticketing system website that stores data locally.
 Issues should be created to indicate that a feature needs to be added or a bug needs to be fixed.
 Think of these like tickets. When you create an issue you can enter a title for your issue and a description,
 you can then assign people to the issue, label the issue into a category, add the issue into a project, and/or
-add the issue to a milestone. 
+add the issue to a milestone.
 
 ## Branches
 
