@@ -2,6 +2,8 @@
 
 A ticketing system website that stores data locally.
 
+[![GitHub Super-Linter](https://github.com/RJD27/it_ticketing_system/workflows/Lint%20Code%20Base/badge.svg)](https://github.com/marketplace/actions/super-linter)
+
 # Workflow
 
 ### Issues
