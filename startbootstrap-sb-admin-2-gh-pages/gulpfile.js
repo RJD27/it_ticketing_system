@@ -12,7 +12,8 @@ const plumber = require("gulp-plumber");
 const rename = require("gulp-rename");
 const sass = require("gulp-sass");
 const uglify = require("gulp-uglify");
-const liveServer = require('gulp-live-server');
+const nodemon = require("nodemon");
+const gls = require("gulp-live-server");
 
 // Load package.json for banner
 const pkg = require('./package.json');
@@ -28,7 +29,7 @@ const banner = ['/*!\n',
 
 // BrowserSync
 function browserSync(done) {
-  let server = liveServer.new('server.js');
+  let server = gls.new("server.js");
   server.start();
 
   browsersync.init({
