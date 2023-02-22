@@ -35,8 +35,22 @@ At this point you can also assign a reviewer who will have the duty of reviewing
 To link issues to be closed once the PR has been approved, under the **'Issues'** heading use **'closes #issueNumber'** for each issue,
 this will automatically link the issues and close them once the PR is approved.
 
-#### Reviewing a PR
+### Reviewing a PR
 
 Before a PR is approved it must and should be reviewed by other people. This reduces bugs and improves code.
 For info on the process of reviewing a PR: *[How to Review a PR](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/reviewing-proposed-changes-in-a-pull-request)*
+
+### Merge Conflicts
+
+Merge conflicts occur in cases where two or more branches are working on the same files and change/remove the same lines and they try to merge but Git does not know which of the changes you would like to keep or remove. In this scenario it will generally be up to the Pull Request owner to decide which changes should be kept, if in doubt then ask for help.
+
+For simple merge conflicts, these can be resolved by pressing the 'Resolve conflicts' button on the Pull Request to open the conflict editor.
+For complex merge conflicts the 'Resolve conflicts' button will be deactivated. To resolve these you can do so using the Git command line.
+VSCode has a merge editor which will help resolve the conflicts.
+
+Resources: 
+- [Resolving a merge conflict on GitHub](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/addressing-merge-conflicts/resolving-a-merge-conflict-on-github)
+- [Resolving a merge conflict using the command line](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/addressing-merge-conflicts/resolving-a-merge-conflict-using-the-command-line)
+- [VSCode Merge Editor - YouTube Guide](https://www.youtube.com/watch?v=HosPml1qkrg)
+
 
