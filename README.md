@@ -48,9 +48,9 @@ For simple merge conflicts, these can be resolved by pressing the 'Resolve confl
 For complex merge conflicts the 'Resolve conflicts' button will be deactivated. To resolve these you can do so using the Git command line.
 VSCode has a merge editor which will help resolve the conflicts.
 
-Resources: 
+Resources:
 - [Resolving a merge conflict on GitHub](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/addressing-merge-conflicts/resolving-a-merge-conflict-on-github)
-- [Resolving a merge conflict using the command line](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/addressing-merge-conflicts/resolving-a-merge-conflict-using-the-command-line)
+- [Resolving a merge conflict using the command-line](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/addressing-merge-conflicts/resolving-a-merge-conflict-using-the-command-line)
 - [VSCode Merge Editor - YouTube Guide](https://www.youtube.com/watch?v=HosPml1qkrg)
 
 
