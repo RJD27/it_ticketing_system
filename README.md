@@ -1,6 +1,6 @@
 # IT Ticketing System
 
-A ticketing system site that stores data locally.
+A site that hosts an IT ticketing system, allowing users to prioritize, organize, and monitor their projects. Data will be stored locally.
 
 [![GitHub Super-Linter](https://github.com/RJD27/it_ticketing_system/workflows/Lint%20Code%20Base/badge.svg)](https://github.com/marketplace/actions/super-linter)
 
@@ -46,11 +46,53 @@ Merge conflicts occur in cases where two or more branches are working on the sam
 
 For simple merge conflicts, these can be resolved by pressing the 'Resolve conflicts' button on the Pull Request to open the conflict editor.
 For complex merge conflicts the 'Resolve conflicts' button will be deactivated. To resolve these you can do so using the Git command line.
-VSCode has a merge editor which will help resolve the conflicts.
+VS Code has a merge editor which will help resolve the conflicts.
 
 Resources:
 - [Resolving a merge conflict on GitHub](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/addressing-merge-conflicts/resolving-a-merge-conflict-on-github)
 - [Resolving a merge conflict using the command-line](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/addressing-merge-conflicts/resolving-a-merge-conflict-using-the-command-line)
-- [VSCode Merge Editor - YouTube Guide](https://www.youtube.com/watch?v=HosPml1qkrg)
+- [VS Code Merge Editor - YouTube Guide](https://www.youtube.com/watch?v=HosPml1qkrg)
 
+## Development Environment
 
+IDE: VS Code
+
+Stack: Express.js, Node.js, MySQL
+
+### Setup
+
+1. Install IDE, Download [VS Code](https://code.visualstudio.com/Download).
+
+2. Install Node.js, Download [Node.js](https://nodejs.org/en/download/).
+
+3. Download [MySQL](https://dev.mysql.com/downloads/mysql/). 
+
+4. [Install and Setup MySQL server and Workbench](https://www.youtube.com/watch?v=u96rVINbAUI).
+
+5. Open Project in VS Code.
+
+6. Install MySQL Extensions, [How to use SQL in VS Code](https://www.youtube.com/watch?v=C0y35FpiLRA).
+  - SQLTools
+  - SQLTools MySQL/MariaDB
+
+7. Install Gulp using command-line.
+
+```commandLine
+npm install gulp
+```
+
+8. Install packages using command-line.
+
+```commandLine
+npm ci
+```
+
+9. If this is your first start you will need to create a .env file, inside this file create a new key called "SESSION_SECRET" and set this to any string you desire. This string is your secret for express-sessions.
+
+```
+SESSION_SECRET = "secret"
+```
+
+10. Set your SQL connection in .vscode/settings.json.
+
+11. Begin working on [issues](https://github.com/RJD27/it_ticketing_system/issues).
