@@ -71,9 +71,9 @@ Stack: Express.js, Node.js, MySQL
 
 5. Open Project in VS Code.
 
-6. Install MySQL Extensions, [How to use SQL in VS Code](https://www.youtube.com/watch?v=C0y35FpiLRA).
-  - SQLTools
-  - SQLTools MySQL/MariaDB
+6. Install MySQL Extensions below, [How to use SQL in VS Code](https://www.youtube.com/watch?v=C0y35FpiLRA).
+- SQLTools
+- SQLTools MySQL/MariaDB
 
 7. Install Gulp using command-line.
 
@@ -89,7 +89,7 @@ npm ci
 
 9. If this is your first start you will need to create a .env file, inside this file create a new key called "SESSION_SECRET" and set this to any string you desire. This string is your secret for express-sessions.
 
-```
+```env
 SESSION_SECRET = "secret"
 ```
 
