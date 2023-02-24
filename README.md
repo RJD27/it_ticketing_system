@@ -65,7 +65,7 @@ Stack: Express.js, Node.js, MySQL
 
 2. Install Node.js, Download [Node.js](https://nodejs.org/en/download/).
 
-3. Download [MySQL](https://dev.mysql.com/downloads/mysql/). 
+3. Download [MySQL](https://dev.mysql.com/downloads/mysql/).
 
 4. [Install and Setup MySQL server and Workbench](https://www.youtube.com/watch?v=u96rVINbAUI).
 
