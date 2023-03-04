@@ -1,13 +1,13 @@
-CREATE DATABASE IT_Ticketing_System;
+CREATE DATABASE it_ticketing_system;
 
-USE IT_Ticketing_System;
+USE it_ticketing_system;
 
 CREATE TABLE Users (
 	UserID INT PRIMARY KEY AUTO_INCREMENT,
 	FirstName VARCHAR(255) NOT NULL,
 	LastName VARCHAR(255) NOT NULL,
 	Email VARCHAR(255) UNIQUE,
-	PasswordHash VARCHAR(255),
+	PasswordHash VARCHAR(255)
 	);
 	
 CREATE TABLE Tickets (
