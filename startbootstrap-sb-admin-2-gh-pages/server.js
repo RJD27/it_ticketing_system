@@ -23,9 +23,14 @@ function ensureAuth(req, res, next) {
   }
 }
 
-app.get("/", (req, res) => {
-  res.render("index.html");
-});
+app.get("/auth/github/callback", passport.authenticate("github", {failureRedirect: "/login"}), 
+function(req,res){
+  res.redirect("/");
+})
+
+
+app.get('/auth/github',
+  passport.authenticate('github'));
 
 app.get("/register.html", (req, res) => {
   res.render("register.html");

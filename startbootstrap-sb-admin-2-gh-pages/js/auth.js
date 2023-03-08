@@ -6,6 +6,7 @@ const mysql = require("mysql2");
 const bodyParser = require("body-parser");
 const bcrypt = require("bcrypt");
 const { GetUserDatabase } = require("./databaseHandler");
+const GitHubStrategy = require('passport-github2').Strategy;
 
 module.exports = function (app) {
   app.use(bodyParser.urlencoded({ extended: true }));
@@ -30,6 +31,37 @@ module.exports = function (app) {
       return console.log(err);
     }
     console.log("DB connection outside of passport established...");
+
+
+    //github strategy
+
+    passport.use("github",
+      new GitHubStrategy({
+        //don't want to lose this when pushing so maybe in official app we can put this in ENV?
+        clientID: process.env.CLIENT_ID,
+        clientSecret: process.env.CLIENT_SECRET,
+        callbackURL: "http://localhost:8000/auth/github/callback"
+      }, 
+      function(accessToken, refreshToken, profile, cb){
+        var check = "SELECT 1 FROM users WHERE Email = ?";
+        connection.query(check, [profile.emails[0]], function(err, user){
+          console.log("user is, " + user)
+          if(err){
+            return console.log(err);
+          }
+          if(!user){
+            connection.query("INSERT INTO Users (UserID, FirstName) Values (?,?)",[profile.id, profile.emails[0]], function(err,users){
+              console.log(users)
+              return cb(err,users);
+            })
+            if(user){
+              return cb(err, user)
+
+            }
+          }
+        }) 
+      })
+    )
 
     //localstrategy to search DB for email/password and check if it matches the typed in email/password.
     passport.use(
