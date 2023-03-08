@@ -27,4 +27,4 @@ jobs:
           VALIDATE_ALL_CODEBASE: false
           DEFAULT_BRANCH: "main"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          FILTER_REGEX_EXCLUDE: .*startbootstrap-sb-admin-2-gh-pages/css/.*
+          FILTER_REGEX_EXCLUDE: (.*startbootstrap-sb-admin-2-gh-pages/css/.*|.*startbootstrap-sb-admin-2-gh-pages/vendor/\w*|.*startbootstrap-sb-admin-2-gh-pages/scss/\w*)
