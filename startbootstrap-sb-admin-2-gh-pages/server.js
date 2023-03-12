@@ -42,12 +42,13 @@ app.get("/register.html", (req, res) => {
 });
 
 app.post("/register", async (req, res) => {
+  console.log(req.body)
   var isUserRegistered = await TryRegisterUser(req.body, res);
   if (!isUserRegistered) {
     res.send({valid: false})
 
   }else{
-    res.send({valid:true})
+    res.send({valid:true}).redirect("/index.html")
   }
 });
 

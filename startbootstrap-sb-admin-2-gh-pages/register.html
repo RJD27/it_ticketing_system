@@ -109,14 +109,16 @@
     form.onsubmit = async (event) => {
         event.preventDefault();
         const formData = new FormData(form);
-        let ob = [];
-        for (const val of formData.entries()) {
-            ob.push(val);
+        let ob = {};
+        for (const [key,value] of formData.entries()) {
+            ob[key] = value;
         }
-        console.log(ob)
         fetch("/register", {
             method: 'POST',
-            body: ob
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(ob)
             
         })
             .then(response => {
