@@ -1,16 +1,21 @@
 const express = require("express");
 const app = express();
-const bodyParser = require("body-parser");
 const auth = require("./js/auth");
 const passport = require("passport");
 const { TryRegisterUser } = require("./js/register");
+
+
 
 app.set("views", __dirname);
 app.set("view-engine", "ejs");
 app.engine("html", require("ejs").renderFile);
 app.use(express.static("./"));
 app.use(require("connect-livereload")());
+
+app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+
 
 auth(app);
 
@@ -39,9 +44,11 @@ app.get("/register.html", (req, res) => {
 app.post("/register", async (req, res) => {
   var isUserRegistered = await TryRegisterUser(req.body, res);
   if (!isUserRegistered) {
-    return res.redirect("./register.html");
+    res.send({valid: false})
+
+  }else{
+    res.send({valid:true})
   }
-  return res.redirect("./login.html");
 });
 
 //routes
