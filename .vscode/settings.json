@@ -8,9 +8,9 @@
             "server": "localhost",
             "port": 3306,
             "driver": "MySQL",
-            "name": "ticketsystem",
+            "name": "ticketsus",
             "username": "root",
-            "password": "root",
+            "password": "PB23Group",
             "database": "it_ticketing_system"
         }
     ]
