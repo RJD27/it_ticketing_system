@@ -5,8 +5,9 @@ const passport = require("passport");
 const mysql = require("mysql2");
 const bodyParser = require("body-parser");
 const bcrypt = require("bcrypt");
-const { GetUserDatabase } = require("./databaseHandler");
+const { GetUserDatabase, AddUserToDatabase } = require("./databaseHandler");
 const GitHubStrategy = require('passport-github2').Strategy;
+
 
 module.exports = function (app) {
   app.use(bodyParser.urlencoded({ extended: true }));
@@ -40,24 +41,36 @@ module.exports = function (app) {
         //don't want to lose this when pushing so maybe in official app we can put this in ENV?
         clientID: process.env.CLIENT_ID,
         clientSecret: process.env.CLIENT_SECRET,
-        callbackURL: "http://localhost:8000/auth/github/callback"
+        callbackURL: "http://localhost:3000/auth/github/callback"
       }, 
       function(accessToken, refreshToken, profile, cb){
         var check = "SELECT 1 FROM users WHERE Email = ?";
-        connection.query(check, [profile.emails[0]], function(err, user){
-          console.log("user is, " + user)
+        connection.query(check, [profile.emails[0].value], function(err, user){
+        console.log("connection query for git")
+        console.log(user)
+        console.log(typeof(user))
+
           if(err){
             return console.log(err);
           }
           if(!user){
-            connection.query("INSERT INTO Users (UserID, FirstName) Values (?,?)",[profile.id, profile.emails[0]], function(err,users){
-              console.log(users)
+            console.log("No user...")
+
+            AddUserToDatabase(
+              connection,
+              profile.name,
+              profile.name,
+              profile.emails[0].value,
+              passwordHash
+            )
+            /*connection.query("INSERT INTO Users (UserID, FirstName) Values (?,?)",[profile.id, profile.emails[0].value], function(err,users){
+              if(err){return console.log(err)}
               return cb(err,users);
             })
-            if(user){
-              return cb(err, user)
+            */
+            return cb(err, user)
 
-            }
+            
           }
         }) 
       })
