@@ -36,6 +36,7 @@ module.exports = function (app) {
 
     //github strategy
 
+
     passport.use("github",
       new GitHubStrategy({
         //don't want to lose this when pushing so maybe in official app we can put this in ENV?
@@ -47,21 +48,19 @@ module.exports = function (app) {
         var check = "SELECT 1 FROM users WHERE Email = ?";
         connection.query(check, [profile.emails[0].value], function(err, user){
         console.log("connection query for git")
-        console.log(user)
-        console.log(typeof(user))
 
           if(err){
             return console.log(err);
           }
-          if(!user){
+          if(user[0] == undefined){
             console.log("No user...")
 
+         
             AddUserToDatabase(
               connection,
-              profile.name,
-              profile.name,
-              profile.emails[0].value,
-              passwordHash
+              profile.username,
+              profile.username,
+              profile.emails[0].value
             )
             /*connection.query("INSERT INTO Users (UserID, FirstName) Values (?,?)",[profile.id, profile.emails[0].value], function(err,users){
               if(err){return console.log(err)}
@@ -72,6 +71,7 @@ module.exports = function (app) {
 
             
           }
+          return cb(err, user)
         }) 
       })
     )
@@ -125,7 +125,7 @@ module.exports = function (app) {
       console.log("Deserialize user...");
       connection.query(
         "SELECT * FROM Users WHERE UserID = ?",
-        [user[0]],
+        [user[0]].toString(),
         function (err, result) {
           if (err) throw err;
           return done(null, result);

@@ -30,7 +30,7 @@ function ensureAuth(req, res, next) {
 
 app.get("/auth/github/callback", passport.authenticate("github", {failureRedirect: "/login"}), 
 function(req,res){
-  res.redirect("./index");
+  res.redirect("/");
 })
 
 
@@ -54,6 +54,7 @@ app.post("/register", async (req, res) => {
 
 //routes
 app.get("/", ensureAuth, (req, res) => {
+  console.log(req.body)
   res.render("./index.html");
 });
 
