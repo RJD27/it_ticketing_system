@@ -129,16 +129,20 @@
             })
             .then(data => {
 
-                if (data.valid) {
-                    validationError.style.display = "none";
-                }
-                else {
+                if (!data.valid) {
                     validationError.style.display = "block";
                 }
+                else{
+                    console.log("front end data is valid")
+                    window.location = "/";
+                }
+                
+                
             })
             .catch(err => {
                 console.error(err)
-            });
+            })
+         
     };
     </script>
 

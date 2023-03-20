@@ -45,14 +45,20 @@ module.exports = function (app) {
         callbackURL: "http://localhost:3000/auth/github/callback"
       }, 
       function(accessToken, refreshToken, profile, cb){
+        // Added emails check.
+        if (profile.emails < 1)
+        {
+          return console.log("There are no public emails on this account");
+        }
         var check = "SELECT 1 FROM users WHERE Email = ?";
         connection.query(check, [profile.emails[0].value], function(err, user){
         console.log("connection query for git")
+        console.log(user)
 
           if(err){
             return console.log(err);
           }
-          if(user[0] == undefined){
+          if(user < 1){
             console.log("No user...")
 
          
@@ -67,11 +73,12 @@ module.exports = function (app) {
               return cb(err,users);
             })
             */
-            return cb(err, user)
+            return cb(null, user)
 
             
           }
-          return cb(err, user)
+          
+          return cb(null, user)
         }) 
       })
     )
@@ -120,7 +127,6 @@ module.exports = function (app) {
       done(null, user);
     });
     passport.deserializeUser((user, done) => {
-      console.log(user);
       //search DB for user by id and return that table.
       console.log("Deserialize user...");
       connection.query(
