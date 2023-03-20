@@ -60,12 +60,17 @@ module.exports = function (app) {
           }
           if(user < 1){
             console.log("No user...")
+            const name = profile.displayName;
+            console.log(name)
+            const first = name.match(/^\w+/gm)
+            const last = name.match(/\w+$/gm)
+            console.log(first)
 
          
             AddUserToDatabase(
               connection,
-              profile.username,
-              profile.username,
+              first[0],
+              last[0],
               profile.emails[0].value
             )
             /*connection.query("INSERT INTO Users (UserID, FirstName) Values (?,?)",[profile.id, profile.emails[0].value], function(err,users){
