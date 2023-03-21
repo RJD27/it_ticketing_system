@@ -9,16 +9,22 @@ const { ValidateRegister } = require("./validator");
 
 async function TryRegisterUser(formBody, res) {
   const { error, value } = ValidateRegister(formBody);
+  let result = {};
 
   if (error) {
+    result["valid"] = false;
+    result["message"] = error['details'][0].message;
     console.log(error);
-    return false;
+    return result;
   }
 
   const connection = GetUserDatabase(mysql);
   connection.connect((error) => {
     if (error) {
-      return console.log(error);
+      result["valid"] = false;
+      result["message"] = " Could not connect to database, please try again later. ";
+      console.log(error);
+      return result;
     }
     console.log("DB connection established...");
   });
@@ -28,8 +34,9 @@ async function TryRegisterUser(formBody, res) {
     value.email
   );
   if (isEmailInDatabase) {
-    console.log(value.email + " is already in the database.");
-    return true;
+    result["valid"] = false;
+    result["message"] = " " + value.email + " is already in the database. ";
+    return result;
   }
 
   const saltRounds = 12;
@@ -43,9 +50,10 @@ async function TryRegisterUser(formBody, res) {
     value.email,
     passwordHash
   );
-
-  console.log(value.email + " has been added to the database.");
-  return true;
+  
+  result["valid"] = true;
+  result["message"] = " " + value.email + " has been added to the database. ";
+  return result;
 }
 
 exports.TryRegisterUser = TryRegisterUser;
