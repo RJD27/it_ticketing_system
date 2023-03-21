@@ -10,7 +10,9 @@ app.set("view-engine", "ejs");
 app.engine("html", require("ejs").renderFile);
 app.use(express.static("./"));
 app.use(require("connect-livereload")());
-app.use(express.urlencoded({ extended: false }));
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }));
+
 
 auth(app);
 
@@ -32,11 +34,15 @@ app.get("/register.html", (req, res) => {
 });
 
 app.post("/register", async (req, res) => {
-  var isUserRegistered = await TryRegisterUser(req.body, res);
-  if (!isUserRegistered) {
-    return res.redirect("./register.html");
+  var {valid, message} = await TryRegisterUser(req.body, res);
+
+  if (valid)
+  {
+    console.log("Redirecting");
+    res.redirect("/login");
+    return;
   }
-  return res.redirect("./login.html");
+  res.json({valid: valid, message: message});
 });
 
 //routes
