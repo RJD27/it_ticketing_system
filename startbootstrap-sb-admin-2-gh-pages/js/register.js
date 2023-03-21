@@ -11,7 +11,6 @@ async function TryRegisterUser(formBody, res) {
   const { error, value } = ValidateRegister(formBody);
 
   if (error) {
-    console.log(error);
     return false;
   }
 
