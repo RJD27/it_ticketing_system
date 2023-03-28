@@ -35,6 +35,25 @@ function CheckIfEmailInDatabase(connection, email) {
   });
 }
 
+function doesUserExist(email){
+  return new Promise((resolve, reject) => {
+    connection.query(
+      "SELECT 1 FROM Users WHERE Email = ?",
+      email,
+      (error, results) => {
+        if (error) {
+          return reject(error);
+        }
+
+        if (results.length < 1) {
+          return resolve(false);
+        }
+        return resolve(true);
+      }
+    );
+  });
+}
+
 function GetUserPasswordHash(connection, email) {
   return new Promise((resolve, reject) => {
     connection.query(

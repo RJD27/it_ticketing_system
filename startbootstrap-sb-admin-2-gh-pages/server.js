@@ -3,6 +3,7 @@ const app = express();
 const auth = require("./js/auth");
 const passport = require("passport");
 const { TryRegisterUser } = require("./js/register");
+const { doesUserExist } = require("./js/databaseHandler");
 
 
 
@@ -50,6 +51,17 @@ app.post("/register", async (req, res) => {
   return res.send({valid: true})
 });
 
+app.get("/check-email", async (req, res) => {
+  console.log(req.body)
+  var doesUserExist = await doesUserExist(req.body.email);
+  if(!doesUserExist){
+    res.send({value:false});
+  }
+  else {
+    res.send({value:true})
+  }
+})
+
 //routes
 app.get("/", ensureAuth, (req, res) => {
   console.log(req.body)
@@ -73,6 +85,11 @@ app.get("/logout", function (req, res) {
     res.redirect("/login");
   });
 });
+
+app.get("/forgot-password", function (req, res){
+  res.render("/forgot-password.html")
+})
+
 
 app.listen(3000, function (err) {
   if (err) console.log(err);
