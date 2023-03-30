@@ -51,7 +51,7 @@ app.post("/register", async (req, res) => {
   return res.send({valid: true})
 });
 
-app.get("/check-email", async (req, res) => {
+app.post("/check-email", async (req, res) => {
   console.log(req.body)
   var doesUserExist = await doesUserExist(req.body.email);
   if(!doesUserExist){

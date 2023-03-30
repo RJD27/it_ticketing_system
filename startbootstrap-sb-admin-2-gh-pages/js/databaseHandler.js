@@ -36,6 +36,7 @@ function CheckIfEmailInDatabase(connection, email) {
 }
 
 function doesUserExist(email){
+  console.log(email)
   return new Promise((resolve, reject) => {
     connection.query(
       "SELECT 1 FROM Users WHERE Email = ?",
@@ -87,3 +88,4 @@ exports.GetUserPasswordHash = GetUserPasswordHash;
 exports.AddUserToDatabase = AddUserToDatabase;
 exports.CheckIfEmailInDatabase = CheckIfEmailInDatabase;
 exports.GetUserDatabase = GetUserDatabase;
+exports.doesUserExist = doesUserExist;
