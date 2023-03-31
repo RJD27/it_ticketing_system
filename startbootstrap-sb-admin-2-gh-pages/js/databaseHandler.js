@@ -34,14 +34,13 @@ function CheckIfEmailInDatabase(connection, email) {
     );
   });
 }
-
-function doesUserExist(email){
-  console.log(email)
+function doesUserExist(connection,email){
   return new Promise((resolve, reject) => {
     connection.query(
       "SELECT 1 FROM Users WHERE Email = ?",
       email,
       (error, results) => {
+        console.log(results.length)
         if (error) {
           return reject(error);
         }

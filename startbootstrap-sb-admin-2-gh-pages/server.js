@@ -3,7 +3,8 @@ const app = express();
 const auth = require("./js/auth");
 const passport = require("passport");
 const { TryRegisterUser } = require("./js/register");
-const { doesUserExist } = require("./js/databaseHandler");
+const { doesUserExist, GetUserDatabase, CheckIfEmailInDatabase } = require("./js/databaseHandler");
+const mysql = require("mysql")
 
 
 
@@ -43,7 +44,6 @@ app.get("/register.html", (req, res) => {
 });
 
 app.post("/register", async (req, res) => {
-  console.log(req.body)
   var isUserRegistered = await TryRegisterUser(req.body, res);
   if (!isUserRegistered) {
     return res.send({valid: false})
@@ -52,9 +52,9 @@ app.post("/register", async (req, res) => {
 });
 
 app.post("/check-email", async (req, res) => {
-  console.log(req.body)
-  var doesUserExist = await doesUserExist(req.body.email);
-  if(!doesUserExist){
+  const connection = GetUserDatabase(mysql);
+  var does = await doesUserExist(connection, req.body.email);
+  if(!does){
     res.send({value:false});
   }
   else {
