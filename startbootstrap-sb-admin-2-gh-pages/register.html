@@ -89,7 +89,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 
     <!-- Bootstrap core JavaScript-->
@@ -117,10 +116,11 @@
         event.preventDefault();
         var formData = new FormData(form);
         let formContent = {};
-        for (var [key, value] of formData.entries()) {
+        for (const [key, value] of formData.entries()) {
             formContent[key] = value;
         }
 
+        console.log("Submitted register form.")
         await fetch("/register", {
             method: 'POST',
             body: JSON.stringify(formContent),
@@ -136,6 +136,7 @@
                 button.disabled = false;
                 if (data.valid) {
                     validationError.style.display = "none";
+                    window.location.href = "./login.html";
                 }
                 else {
                     validationError.lastChild.textContent = data.message;

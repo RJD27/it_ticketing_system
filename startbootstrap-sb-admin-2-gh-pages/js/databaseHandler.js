@@ -9,11 +9,20 @@ function AddUserToDatabase(
     "INSERT INTO users (FirstName, LastName, Email, PasswordHash) VALUES (?)";
   var values = [firstName, lastName, email, passwordHash];
 
-  connection.query(query, [values], function (error) {
-    if (error) {
-      throw error;
+  try
+  {
+    connection.query(query, [values], function (error, results) {
+      if (error) {
+        throw error;
+      }
+    });
+  } catch (error) {
+    if (error.code == 'ER_DUP_ENTRY')
+    {
+      console.log("${email} already exists in the database.");
     }
-  });
+    return error
+  }
 }
 
 function CheckIfEmailInDatabase(connection, email) {
@@ -25,7 +34,7 @@ function CheckIfEmailInDatabase(connection, email) {
         if (error) {
           return reject(error);
         }
-
+        
         if (results.length < 1) {
           return resolve(false);
         }

@@ -11,7 +11,7 @@ app.engine("html", require("ejs").renderFile);
 app.use(express.static("./"));
 app.use(require("connect-livereload")());
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
 
 
 auth(app);
@@ -35,13 +35,6 @@ app.get("/register.html", (req, res) => {
 
 app.post("/register", async (req, res) => {
   var {valid, message} = await TryRegisterUser(req.body, res);
-
-  if (valid)
-  {
-    console.log("Redirecting");
-    res.redirect("/login");
-    return;
-  }
   res.json({valid: valid, message: message});
 });
 
