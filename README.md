@@ -84,15 +84,16 @@ npm install gulp
 8. Install packages using command-line.
 
 ```commandLine
-npm ci
+npm install
 ```
+9. If there are any issues try deleting 'node_modules' and 'package.lock.json' then doing steps 7 and 8 again.
 
-9. If this is your first start you will need to create a .env file, inside this file create a new key called "SESSION_SECRET" and set this to any string you desire. This string is your secret for express-sessions.
+10. If this is your first start you will need to create a .env file, inside this file create a new key called "SESSION_SECRET" and set this to any string you desire. This string is your secret for express-sessions.
 
 ```env
 SESSION_SECRET = "secret"
 ```
 
-10. Set your SQL connection in .vscode/settings.json.
+11. Set your SQL connection in .vscode/settings.json.
 
-11. Begin working on [issues](https://github.com/RJD27/it_ticketing_system/issues).
+12. Begin working on [issues](https://github.com/RJD27/it_ticketing_system/issues).

@@ -1,18 +1,19 @@
 const express = require("express");
 const app = express();
-const bodyParser = require("body-parser");
 const auth = require("./js/auth");
 const passport = require("passport");
 const { TryRegisterUser } = require("./js/register");
+
+
 
 app.set("views", __dirname);
 app.set("view-engine", "ejs");
 app.engine("html", require("ejs").renderFile);
 app.use(express.static("./"));
 app.use(require("connect-livereload")());
+
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }));
-
 
 auth(app);
 
@@ -25,9 +26,14 @@ function ensureAuth(req, res, next) {
   }
 }
 
-app.get("/", (req, res) => {
-  res.render("index.html");
-});
+app.get("/auth/github/callback", passport.authenticate("github", {failureRedirect: "/login"}), 
+function(req,res){
+  res.redirect("/");
+})
+
+
+app.get('/auth/github',
+  passport.authenticate('github'));
 
 app.get("/register.html", (req, res) => {
   res.render("register.html");
@@ -40,6 +46,7 @@ app.post("/register", async (req, res) => {
 
 //routes
 app.get("/", ensureAuth, (req, res) => {
+  console.log(req.body)
   res.render("./index.html");
 });
 

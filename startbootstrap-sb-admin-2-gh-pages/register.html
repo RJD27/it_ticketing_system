@@ -70,13 +70,17 @@
                                     Register Account
                                 </button>
                                 <hr>
-                                <a href="index.html" class="btn btn-google btn-user btn-block">
-                                    <i class="fab fa-google fa-fw"></i> Register with Google
+                                <a href="/auth/github/callback" class="btn btn-google btn-user btn-block">
+                                    <i class="fab fa-github fa-fw"></i> Register with Github
                                 </a>
                                 <a href="index.html" class="btn btn-facebook btn-user btn-block">
                                     <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook
                                 </a>
                             </form>
+                            <div class="alert alert-danger" role="alert" id="RegisterAlert" style="display: none;">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                Invalid email address or password
+                            </div>
                             <hr>
                             <div class="text-center">
                                 <a class="small" href="forgot-password.html">Forgot Password?</a>
@@ -100,6 +104,49 @@
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
+    <script>
+        const form = document.getElementById("registration-form");
+        const validationError = document.getElementById("RegisterAlert");
+
+    form.onsubmit = async (event) => {
+        event.preventDefault();
+        const formData = new FormData(form);
+        let ob = {};
+        for (const [key,value] of formData.entries()) {
+            ob[key] = value;
+        }
+        fetch("/register", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(ob)
+            
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error('Network response error');
+            })
+            .then(data => {
+
+                if (!data.valid) {
+                    validationError.style.display = "block";
+                }
+                else{
+                    console.log("front end data is valid")
+                    window.location = "/";
+                }
+                
+                
+            })
+            .catch(err => {
+                console.error(err)
+            })
+         
+    };
+    </script>
 
 </body>
 

@@ -66,7 +66,7 @@ function GetUserDatabase(mysql) {
   const connection = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "root",
+    password: "PB23Group",
     database: "it_ticketing_system",
   });
 
