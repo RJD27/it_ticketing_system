@@ -34,6 +34,25 @@ function CheckIfEmailInDatabase(connection, email) {
     );
   });
 }
+function doesUserExist(connection,email){
+  return new Promise((resolve, reject) => {
+    connection.query(
+      "SELECT 1 FROM Users WHERE Email = ?",
+      email,
+      (error, results) => {
+        console.log(results.length)
+        if (error) {
+          return reject(error);
+        }
+
+        if (results.length < 1) {
+          return resolve(false);
+        }
+        return resolve(true);
+      }
+    );
+  });
+}
 
 function GetUserPasswordHash(connection, email) {
   return new Promise((resolve, reject) => {
@@ -68,3 +87,4 @@ exports.GetUserPasswordHash = GetUserPasswordHash;
 exports.AddUserToDatabase = AddUserToDatabase;
 exports.CheckIfEmailInDatabase = CheckIfEmailInDatabase;
 exports.GetUserDatabase = GetUserDatabase;
+exports.doesUserExist = doesUserExist;
