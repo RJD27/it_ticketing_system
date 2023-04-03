@@ -14,10 +14,8 @@ app.engine("html", require("ejs").renderFile);
 app.use(express.static("./"));
 app.use(require("connect-livereload")());
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-
-
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }));
 
 auth(app);
 
@@ -44,11 +42,10 @@ app.get("/register.html", (req, res) => {
 });
 
 app.post("/register", async (req, res) => {
-  var isUserRegistered = await TryRegisterUser(req.body, res);
-  if (!isUserRegistered) {
-    return res.send({valid: false})
-  }
-  return res.send({valid: true})
+
+  var {valid, message} = await TryRegisterUser(req.body, res);
+  res.json({valid: valid, message: message});
+
 });
 
 app.post("/check-email", async (req, res) => {

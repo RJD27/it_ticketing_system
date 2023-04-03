@@ -36,15 +36,15 @@
                             <div class="text-center">
                                 <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
                             </div>
-                            <form id="registration-form" class="user" action="/register" method="POST">
+                            <form class="user" id="registration-form">
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" class="form-control form-control-user" id="firstName" name="firstName"
-                                            placeholder="First Name" required>
+                                        <input type="text" class="form-control form-control-user" id="firstName"
+                                            name="firstName" placeholder="First Name" required>
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="text" class="form-control form-control-user" id="lastName" name="lastName"
-                                            placeholder="Last Name" required>
+                                        <input type="text" class="form-control form-control-user" id="lastName"
+                                            name="lastName" placeholder="Last Name" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -57,11 +57,16 @@
                                             name="password" placeholder="Password" required>
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="password" class="form-control form-control-user" id="repeatPassword"
-                                            name="repeatPassword" placeholder="Repeat Password" required>
+                                        <input type="password" class="form-control form-control-user"
+                                            id="repeatPassword" name="repeatPassword" placeholder="Repeat Password"
+                                            required>
                                     </div>
                                 </div>
-                                <button id="submit" type="submit" class="btn btn-primary btn-user btn-block">
+                                <div class="alert alert-danger" role="alert" id="register-alert" style="display: none;">
+                                    <i class="fas fa-exclamation-triangle" id="alert-triangle"></i>
+                                    Invalid email address or password
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-user btn-block" id="register-button">
                                     Register Account
                                 </button>
                                 <hr>
@@ -83,14 +88,11 @@
                             <div class="text-center">
                                 <a class="small" href="login.html">Already have an account? Login!</a>
                             </div>
-                            
-                           
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
 
     <!-- Bootstrap core JavaScript-->
@@ -149,3 +151,47 @@
 </body>
 
 </html>
+
+<script>
+    let form = document.getElementById("registration-form");
+    let validationError = document.getElementById("register-alert");
+    let alertTriangle = document.getElementById("alert-triangle");
+    let button = document.getElementById("register-button");
+
+    form.onsubmit = async (event) => {
+        button.disabled = true;
+        event.preventDefault();
+        var formData = new FormData(form);
+        let formContent = {};
+        for (const [key, value] of formData.entries()) {
+            formContent[key] = value;
+        }
+
+        console.log("Submitted register form.")
+        await fetch("/register", {
+            method: 'POST',
+            body: JSON.stringify(formContent),
+            headers: { 'Content-Type': 'application/json' }
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error('Network response error');
+            })
+            .then(data => {
+                button.disabled = false;
+                if (data.valid) {
+                    validationError.style.display = "none";
+                    window.location.href = "./login.html";
+                }
+                else {
+                    validationError.lastChild.textContent = data.message;
+                    validationError.style.display = "block";
+                }
+            })
+            .catch(err => {
+                console.error(err)
+            });
+    };
+</script>
