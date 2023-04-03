@@ -3,6 +3,8 @@ const app = express();
 const auth = require("./js/auth");
 const passport = require("passport");
 const { TryRegisterUser } = require("./js/register");
+const { doesUserExist, GetUserDatabase, CheckIfEmailInDatabase } = require("./js/databaseHandler");
+const mysql = require("mysql")
 
 
 
@@ -40,9 +42,22 @@ app.get("/register.html", (req, res) => {
 });
 
 app.post("/register", async (req, res) => {
+
   var {valid, message} = await TryRegisterUser(req.body, res);
   res.json({valid: valid, message: message});
+
 });
+
+app.post("/check-email", async (req, res) => {
+  const connection = GetUserDatabase(mysql);
+  var does = await doesUserExist(connection, req.body.email);
+  if(!does){
+    res.send({value:false});
+  }
+  else {
+    res.send({value:true})
+  }
+})
 
 //routes
 app.get("/", ensureAuth, (req, res) => {
@@ -67,6 +82,11 @@ app.get("/logout", function (req, res) {
     res.redirect("/login");
   });
 });
+
+app.get("/forgot-password", function (req, res){
+  res.render("/forgot-password.html")
+})
+
 
 app.listen(3000, function (err) {
   if (err) console.log(err);
